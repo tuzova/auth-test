@@ -31,7 +31,7 @@ public class DataGenerator {
     private static void sendRequest(User user) {
         given()
                 .spec(requestSpec) // cпецификация запроса
-                .body(new User("vasya", "password", "active")) // передаём объект User
+                .body(user) // передаём объект user
                 .when()
                 .post("/api/system/users")
                 .then()
@@ -79,7 +79,6 @@ public class DataGenerator {
         // создаем незарегистрированного юзера на основе шаблона
         public static User getNotRegisteredUser(String status) {
             User notRegisteredUser = new User(getRandomLogin(), getRandomPassword(), "active");
-            sendRequest(notRegisteredUser);
             return notRegisteredUser;
         }
     }

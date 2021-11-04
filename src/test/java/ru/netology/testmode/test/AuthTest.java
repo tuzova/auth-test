@@ -34,7 +34,7 @@ class AuthTest {
         $("[data-test-id='login'] input").setValue(activeUser.getLogin());
         $("[data-test-id='password'] input").setValue(activeUser.getPassword());
         $$("button").find(exactText("Продолжить")).click();
-        open("http://localhost:7777/dashboard");
+        $(withText("Личный кабинет")).shouldBe(visible);
     }
 
     @Test
@@ -56,7 +56,9 @@ class AuthTest {
         $("[data-test-id='login'] input").setValue(blockedUser.getLogin());
         $("[data-test-id='password'] input").setValue(blockedUser.getPassword());
         $$("button").find(exactText("Продолжить")).click();
-        open("http://localhost:7777/dashboard"); // нет ошибки заблокированного пользователя!!! > переход в лк
+        $(withText("Ошибка")).shouldBe(visible, Duration.ofSeconds(15));
+        $("[data-test-id='error-notification'] div.notification__content").shouldBe(visible);
+        $(withText("Пользователь заблокирован")).shouldBe(visible);
     }
 
     @Test
